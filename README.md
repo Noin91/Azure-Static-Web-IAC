@@ -49,7 +49,7 @@ CAF-style names such as `rg-fantasy-e-draft-dev` and `stapp-fantasy-e-draft-dev`
 ## Deploy
 
 ```bash
-export BUDGET_CONTACT_EMAIL="you@example.com"
+export BUDGET_CONTACT_EMAIL="beispiel@emial.com"
 
 # 1. Validate without creating anything
 az deployment sub validate \
