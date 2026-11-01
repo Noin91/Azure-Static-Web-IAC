@@ -73,12 +73,11 @@ Clean up: `az group delete --name rg-fantasy-e-draft-dev`.
 
 ## Status
 
-- [x] Bicep code for resource group, Static Web App (Free) and budget
+- [x] Bicep code for resource group, Static Web App and budget
 - [x] CI workflow for build, lint and Checkov (runs on push and pull request)
-- [ ] CI run green on GitHub
-- [ ] First deployment from this repo to a `dev` environment
-- [ ] `what-if` in CI via OIDC federation (no stored secrets)
-- [ ] Log Analytics / Application Insights module
+- [x] CI run green on GitHub
+- [x] First deployment from this repo to a `dev` environment
+- [x] `what-if` in CI via OIDC federation
 
 ## Security notes
 
