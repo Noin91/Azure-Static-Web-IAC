@@ -1,0 +1,46 @@
+name: Validate IaC
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  bicep:
+    name: Bicep build and lint
+    runs-on: ubuntu-latest
+    env:
+      # Throws an error if email is not provided
+      BUDGET_CONTACT_EMAIL: ""
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Bicep
+        run: az bicep install
+
+      - name: Build template
+        run: az bicep build --file infra/main.bicep --stdout > /dev/null
+
+      - name: Build parameters
+        run: az bicep build-params --file infra/main.bicepparam --stdout > /dev/null
+
+      - name: Lint
+        run: az bicep lint --file infra/main.bicep
+        
+  # Open Source security scanner for bicep IAC
+  checkov:
+    name: Security scan (Checkov)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Checkov on Bicep
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: infra
+          framework: bicep
+          soft_fail: true
