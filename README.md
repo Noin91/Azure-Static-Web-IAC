@@ -1,8 +1,6 @@
 # azure-swa-iac
 
-Infrastructure as Code (Bicep) for a React single-page app on **Azure Static Web Apps (Free plan)**, with a built-in **cost guardrail**.
-
-The goal of this project is a reproducible, cost-safe Azure baseline: everything that was first created by hand in the portal is described as code, can be validated in CI, and cannot accidentally be switched to a paid SKU.
+Infrastructure as Code for a React single-page app on **Azure Static Web Apps**, with a built-in **cost guardrail**.
 
 > Status: infrastructure code written and validated in CI (see checklist below). It has **not** been deployed from this repo yet; the live app was created manually before.
 
@@ -23,16 +21,12 @@ flowchart LR
 
 ## Cost guardrails
 
-Avoiding unplanned cost is a design requirement, not an afterthought.
-
 | Guardrail | Where | Effect |
 |---|---|---|
 | `@allowed(['Free'])` on the SKU parameter | `infra/modules/staticwebapp.bicep` | A deployment with a paid SKU fails at validation time |
 | `@allowed` on the region | `infra/main.bicep` | Only regions supported by the Free plan |
 | Monthly budget with alerts at 50 %, 90 %, 100 % of actual spend | `infra/modules/budget.bicep` | E-mail warning |
 | Contact e-mail read from an environment variable | `infra/main.bicepparam` | No personal data in the repo |
-
-Important: a budget **only warns**, it never stops resources. The real protection is the free account's spending limit (do not upgrade to pay-as-you-go) plus the Free-only SKU lock.
 
 ## Naming and tags
 
@@ -48,19 +42,14 @@ CAF-style names such as `rg-fantasy-e-draft-dev` and `stapp-fantasy-e-draft-dev`
 │   └── modules/
 │       ├── staticwebapp.bicep  # Static Web App, Free only
 │       └── budget.bicep        # monthly budget with alerts
-├── docs/
-│   ├── naming-convention.md
-│   └── security-case-study-rls.md
 └── .github/workflows/
     └── validate.yml            # bicep build + lint, Checkov scan
 ```
 
 ## Deploy
 
-Prerequisites: Azure CLI with Bicep, and a login (`az login`). Use a learning subscription, not a company tenant.
-
 ```bash
-export BUDGET_CONTACT_EMAIL="you@example.com"   # never commit this
+export BUDGET_CONTACT_EMAIL="you@example.com"
 
 # 1. Validate without creating anything
 az deployment sub validate \
