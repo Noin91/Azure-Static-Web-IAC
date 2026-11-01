@@ -1,6 +1,6 @@
-# azure-swa-iac
+# Azure Static Web App IAC
 
-Infrastructure as Code for a React single-page app on **Azure Static Web Apps**, with a built-in **cost guardrail**.
+Infrastructure as Code for a React single-page app on **Azure Static Web Apps**, with a **cost guardrail**.
 
 > Status: infrastructure code written and validated in CI (see checklist below). It has **not** been deployed from this repo yet; the live app was created manually before.
 
@@ -86,13 +86,3 @@ Clean up: `az group delete --name rg-fantasy-e-draft-dev`.
 - The deployment token of a Static Web App and all application keys live in GitHub repository secrets only.
 - Front-end build variables (`VITE_*`) end up in the browser bundle. Only public values such as the Supabase anon key belong there; access control is enforced by Row Level Security. See [docs/security-case-study-rls.md](docs/security-case-study-rls.md).
 - Checkov currently runs with `soft_fail: true`. Findings are to be reviewed and then enforced.
-
-## Troubleshooting log
-
-**Two workflows deploying into one Static Web App.** Azure generated a workflow file when the app was created, and a second one was added manually later. They used different deployment tokens and app locations, so builds overwrote each other and the site served wrong files. Fix: exactly one workflow per Static Web App, with the token of that specific app.
-
-## Roadmap
-
-1. OIDC login from GitHub Actions and `what-if` on pull requests.
-2. Monitoring module (Log Analytics, Application Insights, alert rules).
-3. Second project: containerised API with database, built and scanned in CI, not run permanently.
