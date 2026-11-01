@@ -44,9 +44,6 @@ CAF-style names such as `rg-fantasy-e-draft-dev` and `stapp-fantasy-e-draft-dev`
 │   └── modules/
 │       ├── staticwebapp.bicep  # Static Web App, Free only
 │       └── budget.bicep        # monthly budget with alerts
-├── docs/
-│   ├── naming-convention.md
-│   └── security-case-study-rls.md
 └── .github/workflows/
     └── validate.yml            # bicep build + lint, Checkov scan
 ```
